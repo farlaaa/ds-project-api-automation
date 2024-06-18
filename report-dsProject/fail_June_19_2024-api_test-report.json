@@ -1,0 +1,268 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 9,
+    "passes": 7,
+    "pending": 0,
+    "failures": 2,
+    "start": "2024-06-18T17:01:47.419Z",
+    "end": "2024-06-18T17:01:56.001Z",
+    "duration": 8582,
+    "testsRegistered": 9,
+    "passPercent": 77.77777777777779,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "29b8fd5a-cb1b-477c-aef4-5a4cd93960c9",
+      "title": "",
+      "fullFile": "D:\\Data Farla\\Training\\Task\\Task 7\\ds-project-api-automation\\test\\api_test.js",
+      "file": "\\test\\api_test.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "12e566b0-c1b3-4c3e-aaf3-87606648ee8f",
+          "title": "reqres API testing",
+          "fullFile": "D:\\Data Farla\\Training\\Task\\Task 7\\ds-project-api-automation\\test\\api_test.js",
+          "file": "\\test\\api_test.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "[TC1] GET - List User",
+              "fullTitle": "reqres API testing [TC1] GET - List User",
+              "timedOut": false,
+              "duration": 199,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const schema = readJsonSchema('get_listUser_schema.json')\nconst response = await supertest(URL)\n    .get(\"/api/users?page=2\");\n    expect(response.status).to.equal(200)\n    expect(response.body).to.be.an('object');\n    expect(response.body.data).to.be.an('array')\n    expect(response.body).to.be.jsonSchema(schema)\n    expect(response.body.page).to.equal(2)",
+              "err": {},
+              "uuid": "46a02510-0fc9-45d6-8f0a-064a5167b516",
+              "parentUUID": "12e566b0-c1b3-4c3e-aaf3-87606648ee8f",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "[TC2] GET - Single User",
+              "fullTitle": "reqres API testing [TC2] GET - Single User",
+              "timedOut": false,
+              "duration": 82,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const schema = readJsonSchema('get_singleUser_schema.json')\nconst response = await supertest(URL)\n    .get(\"/api/users/2\");\n    expect(response.status).to.equal(200)\n    expect(response.body).to.be.an('object')\n    expect(response.body).to.be.jsonSchema(schema)",
+              "err": {},
+              "uuid": "ac0c719e-449d-4065-9b06-5165b30c3a96",
+              "parentUUID": "12e566b0-c1b3-4c3e-aaf3-87606648ee8f",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "[TC3] - POST Create - validData",
+              "fullTitle": "reqres API testing [TC3] - POST Create - validData",
+              "timedOut": false,
+              "duration": 1092,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const schema = readJsonSchema('post_create_schema.json')\nconst body = {\n        \"name\": \"Freya Illaya\",\n        \"role\": \"Tech Lead\",\n        \"address\": \"Jakarta\",\n        \"email\": \"frellaya@gmail.com\",\n        \"age\": 25,\n        \"avatar\" : \"https://reqres.in/img/faces/12-image.jpg\"\n}\nconst response = await supertest(URL)\n    .post(\"/api/users\")\n    .send(body);\n    expect(response.status).to.be.oneOf([200, 201])\n    expect(response.body).to.be.jsonSchema(schema)\n    expect(response.body).to.have.property('id')\n    createdIdUser = response.body.id;\n    console.log(response.body)",
+              "err": {},
+              "uuid": "2471351e-0626-4f75-996e-76104709efbb",
+              "parentUUID": "12e566b0-c1b3-4c3e-aaf3-87606648ee8f",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "[TC4] - POST Create - Accept Missing Required Properties",
+              "fullTitle": "reqres API testing [TC4] - POST Create - Accept Missing Required Properties",
+              "timedOut": false,
+              "duration": 805,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const schema = readJsonSchema('post_create_schema.json')\nconst invalidBody = {\n        \"name\": \"Freya Illaya Handayani\",\n        \"address\": \"Bandung\",\n        //without role, email, age, avatar\n};\n    \nconst response = await supertest(URL)\n    .post(\"/api/users\")\n    .send(invalidBody);\n    expect(response.status).to.equal(400)\n    expect(response.invalidBody).to.be.jsonSchema(schema)",
+              "err": {
+                "message": "AssertionError: expected 201 to equal 400",
+                "estack": "AssertionError: expected 201 to equal 400\n    at Context.<anonymous> (test\\api_test.js:71:40)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                "diff": "- 201\n+ 400\n"
+              },
+              "uuid": "031a3491-6cce-472f-9dcd-64132479abe5",
+              "parentUUID": "12e566b0-c1b3-4c3e-aaf3-87606648ee8f",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "[TC5] - POST Register - validData",
+              "fullTitle": "reqres API testing [TC5] - POST Register - validData",
+              "timedOut": false,
+              "duration": 2661,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const schema = readJsonSchema('post_register_schema.json')\nconst body = {\n        \"email\": \"janet.weaver@reqres.in\",\n        \"password\": \"inipasswordceritanya7276x\"\n}\nconst response = await supertest(URL)\n    .post(\"/api/register\")\n    .send(body);\n    expect(response.status).to.be.oneOf([200, 201])\n    expect(response.body).to.be.jsonSchema(schema)\n    expect(response.body).to.have.property('id')\n    createdIdRegister = response.body.id;",
+              "err": {},
+              "uuid": "fc0f356a-ac50-427a-bd0d-ee86e357216b",
+              "parentUUID": "12e566b0-c1b3-4c3e-aaf3-87606648ee8f",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "[TC6] - POST Register - invalidData",
+              "fullTitle": "reqres API testing [TC6] - POST Register - invalidData",
+              "timedOut": false,
+              "duration": 1105,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const schema = readJsonSchema('post_register_schema.json')\nconst body = {\n        \"email\": \"janet.weaver@reqres.in\"\n        //without password\n}\nconst response = await supertest(URL)\n    .post(\"/api/register\")\n    .send(body);\n    expect(response.status).to.equal(400)\n    expect(response.body.error).to.equal('Missing password')",
+              "err": {},
+              "uuid": "35f588dc-9544-4150-bf10-417a9ff88f19",
+              "parentUUID": "12e566b0-c1b3-4c3e-aaf3-87606648ee8f",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "[TC7] DELETE User",
+              "fullTitle": "reqres API testing [TC7] DELETE User",
+              "timedOut": false,
+              "duration": 1100,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const response = await supertest(URL)\n    .delete(`/api/users/${createdIdUser}`);\n\n    expect(response.status).to.equal(204)",
+              "err": {},
+              "uuid": "6481c3da-b44e-4dd7-961e-cfc3f54f0df4",
+              "parentUUID": "12e566b0-c1b3-4c3e-aaf3-87606648ee8f",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "[TC8] - PUT Update - validData",
+              "fullTitle": "reqres API testing [TC8] - PUT Update - validData",
+              "timedOut": false,
+              "duration": 757,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const schema = readJsonSchema('put_update_schema.json')\nconst body = {\n        \"name\": \"Freya Illaya Handayani\",\n        \"role\": \"Tech Lead - FE\",\n        \"address\": \"Jakarta\",\n        \"email\": \"frellaya.handayani@gmail.com\",\n        \"age\": 27,\n        \"avatar\" : \"https://reqres.in/img/faces/3-image.jpg\"\n}\nconst response = await supertest(URL)\n    .put(`/api/users/${createdIdUser}`)\n    .send(body);\n    expect(response.status).to.be.oneOf([200, 201])\n    expect(response.body).to.be.jsonSchema(schema)\n    console.log(response.body)",
+              "err": {},
+              "uuid": "4233d97d-d9de-4d38-99b5-635eae3d82e2",
+              "parentUUID": "12e566b0-c1b3-4c3e-aaf3-87606648ee8f",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "[TC9] - PUT Update - Accept Missing Required Properties",
+              "fullTitle": "reqres API testing [TC9] - PUT Update - Accept Missing Required Properties",
+              "timedOut": false,
+              "duration": 770,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const schema = readJsonSchema('put_update_schema.json')\nconst invalidBodyUpdate = {\n        \"name\": \"Freya Illaya Handayani\",\n        \"address\": \"Bandung\",\n        //without role, email, age, avatar\n}\nconst response = await supertest(URL)\n    .put(`/api/users/${createdIdUser}`)\n    .send(invalidBodyUpdate);\n    expect(response.status).to.equal(400)\n    expect(response.invalidBodyUpdate).to.be.jsonSchema(schema)",
+              "err": {
+                "message": "AssertionError: expected 200 to equal 400",
+                "estack": "AssertionError: expected 200 to equal 400\n    at Context.<anonymous> (test\\api_test.js:148:40)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                "diff": "- 200\n+ 400\n"
+              },
+              "uuid": "0b5d4d6d-27d1-44be-adb5-ba5da9a47dd5",
+              "parentUUID": "12e566b0-c1b3-4c3e-aaf3-87606648ee8f",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "46a02510-0fc9-45d6-8f0a-064a5167b516",
+            "ac0c719e-449d-4065-9b06-5165b30c3a96",
+            "2471351e-0626-4f75-996e-76104709efbb",
+            "fc0f356a-ac50-427a-bd0d-ee86e357216b",
+            "35f588dc-9544-4150-bf10-417a9ff88f19",
+            "6481c3da-b44e-4dd7-961e-cfc3f54f0df4",
+            "4233d97d-d9de-4d38-99b5-635eae3d82e2"
+          ],
+          "failures": [
+            "031a3491-6cce-472f-9dcd-64132479abe5",
+            "0b5d4d6d-27d1-44be-adb5-ba5da9a47dd5"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 8571,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 10000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 10000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "10.4.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "[status]_[datetime]-[name]-report",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "report-dsProject",
+        "reportFilename": "[status]_[datetime]-[name]-report",
+        "html": "true",
+        "json": "true",
+        "overwrite": "false",
+        "timestamp": "longDate"
+      },
+      "version": "6.2.0"
+    }
+  }
+}

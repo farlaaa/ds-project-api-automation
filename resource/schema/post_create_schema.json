@@ -1,0 +1,36 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "role": {
+        "type": "string"
+      },
+      "address": {
+        "type": "string"
+      },
+      "email": {
+        "type": "string",
+        "format": "email"
+      },
+      "age": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "avatar": {
+        "type": "string",
+        "format": "uri"
+      },
+      "id": {
+        "type": "string"
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date-time"
+      }
+    },
+    "required": ["name", "role", "address", "email", "age", "avatar", "id", "createdAt"]
+  }
+  
